@@ -1,6 +1,6 @@
 {
   "name": "@luna-lang/jsnext",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Extensible JavaScript preprocessor engine.",
   "homepage": "https://luna.github.io/jsnext/",
   "author": "Wojciech Danilo <wojciech.danilo@gmail.com>",
