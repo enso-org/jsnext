@@ -10,6 +10,7 @@ export rulesExample =
 
 
 out = jsnext.preprocessModule 'index.js', rulesExample, '''
+import * as pkg1   from 'pkg1'
 import * as jsnext from 'jsnext'
 
 foo = jsnext.apply(['basegl.math'], (function() {

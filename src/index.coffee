@@ -86,7 +86,18 @@ replace = (parent, oldVal, newVal) ->
         if el == oldVal
           v[i] = newVal
           return
-  console.log "OH NO"
+  throw 'Insufficient pattern match.'
+
+remove = (parent, oldVal) ->
+  for k,v of parent
+    if (v == oldVal)
+      throw 'Cannot remove non-optional value'
+    else if v instanceof Array
+      for el,i in v
+        if el == oldVal
+          v.splice(i,1)
+          return
+  throw 'Insufficient pattern match.'
 
 
 export getFunctionLike = (ast) ->
@@ -98,11 +109,19 @@ export getFunctionLike = (ast) ->
 
 export getImports = (ast) ->
   imports = []
-  if ast.type == types.program
-    for node in ast.body
-      if node.type == types.importDeclaration
+  walk.ancestor ast,
+    ImportDeclaration: (node, ancestors) ->
+      imports.push node
+  return imports
+
+export getAndRemoveLibImports = (ast) ->
+  imports = []
+  walk.ancestor ast,
+    ImportDeclaration: (node, ancestors) ->
+      if node.source.value == libName
         imports.push node
-  else throw "Unsupported ast type `#{ast.type}`"
+        parent = getWalkParent ancestors
+        remove parent, node
   return imports
 
 
@@ -134,11 +153,8 @@ export getParent     = (ancestors) -> ancestors[ancestors.length - 1]
 
 # Get references to all local variables refering to this library
 export getLibModuleRefs = (ast) ->
-  imports = getImports ast
-  refs    = []
-  for imp in imports
-    if imp.source.value == libName then refs.push imp.specifiers[0].local.name
-  refs
+  imports = getAndRemoveLibImports ast
+  imp.specifiers[0].local.name for imp in imports
 
 # Walks AST and executes `f` on every expression like `jsnext.apply ...`
 walkLibApply = (libRefs, ast, f) ->
@@ -167,9 +183,6 @@ export preprocessModule = (fileName, extensionMap, code) ->
         if fexts? then for fext in fexts
           fext parser, localAst, localAncestors
     parent = getParent ancestors
-    console.log '---'
-    console.log node
-    console.log parent
     replace parent, node, localAst
   gen = escodegen.generate ast,
     sourceMap: true

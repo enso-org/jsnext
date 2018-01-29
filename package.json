@@ -1,5 +1,5 @@
 {
-  "name": "jsnext",
+  "name": "@luna-lang/jsnext",
   "version": "0.0.1",
   "description": "Extensible JavaScript preprocessor engine.",
   "homepage": "https://luna.github.io/jsnext/",
