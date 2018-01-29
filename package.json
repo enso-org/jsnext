@@ -1,0 +1,50 @@
+{
+  "name": "jsnext",
+  "version": "0.0.1",
+  "description": "Extensible JavaScript preprocessor engine.",
+  "homepage": "https://luna.github.io/jsnext/",
+  "author": "Wojciech Danilo <wojciech.danilo@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build && node dist/index.js",
+    "build": "npx gulp --gulpfile build/gulpfile.coffee build",
+    "watch": "npx gulp --gulpfile build/gulpfile.coffee watch",
+    "watch:start": "npx gulp --gulpfile build/gulpfile.coffee watch:start",
+    "sandbox": "npx gulp --gulpfile build/gulpfile.coffee sandbox",
+    "publish": "npx gulp --gulpfile build/gulpfile.coffee publish",
+    "publish:dev": "npx gulp --gulpfile build/gulpfile.coffee publish:dev",
+    "publish:minor": "npx gulp --gulpfile build/gulpfile.coffee publish:minor",
+    "publish:major": "npx gulp --gulpfile build/gulpfile.coffee publish:major"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luna/jsnext.git"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [
+    "JavaScript",
+    "preprocessor"
+  ],
+  "bugs": {
+    "url": "https://github.com/luna/jsnext/issues"
+  },
+  "devDependencies": {
+    "coffeescript": "next",
+    "gulp": "next",
+    "gulp-coffee": "^3.0.2",
+    "gulp-transform": "^3.0.5",
+    "gulp-rename": "^1.2.2",
+    "gulp-plumber": "^1.2.0",
+    "gulp-debug": "^3.2.0",
+    "webpack": "^3.9.1",
+    "webpack-dev-server": "^2.9.7",
+    "coffee-loader": "^0.9.0"
+  },
+  "dependencies": {
+    "acorn": "^5.3.0",
+    "escodegen": "^1.9.0"
+  }
+}
