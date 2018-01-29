@@ -121,8 +121,6 @@ exports.getAndRemoveLibImports = getAndRemoveLibImports = (ast, modName) ->
     ImportDeclaration: (node, ancestors) ->
       if node.source.value == modName
         imports.push node
-        parent = getWalkParent ancestors
-        remove parent, node
   return imports
 
 
