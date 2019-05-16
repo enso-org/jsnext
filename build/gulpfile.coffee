@@ -124,3 +124,7 @@ gulp.task 'sandboxServer', ->
   child.on        'close', (code) -> console.log(code.toString())
 
 gulp.task 'sandbox', (gulp.series 'build', (gulp.parallel 'watch', 'sandboxServer'))
+
+gulp.task 'mocha', ->
+  runChild 'npx mocha ../test/**/*.spec.js'
+gulp.task 'test', (gulp.series 'build', 'mocha')
