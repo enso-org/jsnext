@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node dist/index.js",
+    "test": "npx gulp --gulpfile build/gulpfile.coffee test",
     "build": "npx gulp --gulpfile build/gulpfile.coffee build",
     "watch": "npx gulp --gulpfile build/gulpfile.coffee watch",
     "watch:start": "npx gulp --gulpfile build/gulpfile.coffee watch:start",
@@ -33,12 +34,13 @@
   },
   "devDependencies": {
     "coffeescript": "next",
-    "gulp": "next",
+    "gulp": "latest",
     "gulp-coffee": "^3.0.2",
     "gulp-transform": "^3.0.5",
     "gulp-rename": "^1.2.2",
     "gulp-plumber": "^1.2.0",
     "gulp-debug": "^3.2.0",
+    "mocha": "^6.1.4",
     "webpack": "^3.9.1",
     "webpack-dev-server": "^2.9.7",
     "coffee-loader": "^0.9.0"

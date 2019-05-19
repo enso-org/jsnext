@@ -121,6 +121,13 @@ exports.getAndRemoveLibImports = getAndRemoveLibImports = (ast, modName) ->
     ImportDeclaration: (node, ancestors) ->
       if node.source.value == modName
         imports.push node
+    CallExpression: (node, ancestors) ->
+      if node.callee.name == 'require' and
+            node.arguments.length == 1 and
+            node.arguments[0].value == modName
+
+        [..., decl, _] = ancestors
+        imports.push decl
   return imports
 
 
@@ -153,7 +160,8 @@ exports.getParent = getParent     = (ancestors) -> ancestors[ancestors.length - 
 # Get references to all local variables refering to this library
 exports.getLibModuleRefs = getLibModuleRefs = (ast, modName) ->
   imports = getAndRemoveLibImports ast, modName
-  imp.specifiers[0].local.name for imp in imports
+  # ImportDeclarion or VariableDeclartion + CallExpression
+  imp.specifiers?[0].local.name or imp.id?.name for imp in imports
 
 # Walks AST and executes `f` on every expression like `jsnext.apply ...`
 walkLibApply = (libRefs, ast, callName, f) ->
